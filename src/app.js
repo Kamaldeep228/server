@@ -54,12 +54,16 @@ app.use(express.json({limit: "50kb"}))
 app.use(express.urlencoded({extended: true, limit: "50kb"}))
 app.use(express.static("public"))
 app.use(cookieParser())
+app.use(express.static(path.join(__dirname, 'client/out')));
 
 // Load Swagger JSON with fs and JSON.parse
 const swaggerDocument = JSON.parse(fs.readFileSync(__dirname + '/swagger.json', 'utf-8'));
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
+app.get('*', function(req,res){
+res.sendFile(path.join(__dirname, 'client/out', 'index.html'));
+})
 
 //routes import
 import profileRouter from './routes/profile.routes.js';
