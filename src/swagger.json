@@ -1,0 +1,1631 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Profile Selection",
+    "description": "Api's for Profile Selection web application",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/v1/profiles/all": {
+      "get": {
+        "tags": ["Profiles"],
+        "description": "Get all profiles",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 200
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string",
+                        "description": "Profile ID"
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "Profile name"
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": "Profile description"
+                      },
+                      "expertise": {
+                        "type": "string",
+                        "description": "Profile expertise"
+                      },
+                      "jobSuccessScore": {
+                        "type": "number",
+                        "description": "Job success score"
+                      },
+                      "totalEarnings": {
+                        "type": "number",
+                        "description": "Total earnings"
+                      },
+                      "totalHours": {
+                        "type": "number",
+                        "description": "Total hours worked"
+                      },
+                      "totalJobs": {
+                        "type": "number",
+                        "description": "Total jobs completed"
+                      },
+                      "badge": {
+                        "type": "string",
+                        "description": "Profile badge"
+                      },
+                      "completedWorkHistory": {
+                        "type": "array",
+                        "description": "Completed work history"
+                      },
+                      "inProgressWorks": {
+                        "type": "array",
+                        "description": "In progress works"
+                      },
+                      "isActive": {
+                        "type": "boolean",
+                        "description": "Is the profile active"
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Profile creation date"
+                      },
+                      "updatedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Profile last updated date"
+                      },
+                      "isSpecializedProfile": {
+                        "type": "boolean",
+                        "description": "Indicates if it is a specialized profile"
+                      },
+                      "originalProfile": {
+                        "type": "object",
+                        "description": "Original profile details if applicable"
+                      }
+                    }
+                  }
+                },
+                "message": {
+                  "type": "string",
+                  "example": "successfull"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No profiles found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/profiles/createProfile": {
+      "post": {
+        "tags": ["Profiles"],
+        "description": "Create a profile",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "url": {
+                  "type": "string",
+                  "description": "URL to scrape profile from. Must start with 'https://www.upwork.com/'",
+                  "example": "https://www.upwork.com/freelancers/~0122cd97069a94a6e3"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Profile created successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 201
+                },
+                "data": {
+                  "type": "object",
+                  "description": "Scraped profile data",
+                  "example": {
+                    "url": "https://www.upwork.com/freelancers/~0122cd97069a94a6e3",
+                    "profileData": {}
+                  }
+                },
+                "message": {
+                  "type": "string",
+                  "example": "successfully scrape profile"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid URL. URL must start with 'https://www.upwork.com/'"
+          },
+          "404": {
+            "description": "No Cookies found or Profile not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/profiles/saveProfile": {
+      "post": {
+        "tags": ["Profiles"],
+        "description": "Save a new profile",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "profile": {
+                  "type": "object",
+                  "description": "Profile object to be saved",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "description": "Profile ID"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "Profile name"
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "Profile description"
+                    },
+                    "expertise": {
+                      "type": "string",
+                      "description": "Profile expertise"
+                    },
+                    "jobSuccessScore": {
+                      "type": "number",
+                      "description": "Job success score"
+                    },
+                    "totalEarnings": {
+                      "type": "number",
+                      "description": "Total earnings"
+                    },
+                    "totalHours": {
+                      "type": "number",
+                      "description": "Total hours worked"
+                    },
+                    "totalJobs": {
+                      "type": "number",
+                      "description": "Total jobs completed"
+                    },
+                    "badge": {
+                      "type": "string",
+                      "description": "Profile badge"
+                    },
+                    "completedWorkHistory": {
+                      "type": "array",
+                      "description": "Completed work history"
+                    },
+                    "inProgressWorks": {
+                      "type": "array",
+                      "description": "In progress works"
+                    },
+                    "isActive": {
+                      "type": "boolean",
+                      "description": "Is the profile active"
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Profile creation date"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Profile last updated date"
+                    }
+                  },
+                  "required": ["name", "description", "expertise"]
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Profile successfully saved",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 201
+                },
+                "message": {
+                  "type": "string",
+                  "example": "successfully saved profile"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/profiles/deleteProfile/{id}": {
+      "delete": {
+        "tags": ["Profiles"],
+        "description": "Delete a profile by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Profile ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Profile deleted successfully"
+          },
+          "400": {
+            "description": "Invalid Profile ID"
+          },
+          "404": {
+            "description": "Profile not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/profiles/getProfiles": {
+      "post": {
+        "tags": ["Profiles"],
+        "description": "Get profiles based on search input",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "searchInput": {
+                  "type": "string",
+                  "description": "Search term for filtering profiles by name or expertise",
+                  "example": "developer"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 200
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "docs": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "description": "Profile ID"
+                          },
+                          "name": {
+                            "type": "string",
+                            "description": "Profile name"
+                          },
+                          "description": {
+                            "type": "string",
+                            "description": "Profile description"
+                          },
+                          "expertise": {
+                            "type": "string",
+                            "description": "Profile expertise"
+                          },
+                          "jobSuccessScore": {
+                            "type": "number",
+                            "description": "Job success score"
+                          },
+                          "totalEarnings": {
+                            "type": "number",
+                            "description": "Total earnings"
+                          },
+                          "totalHours": {
+                            "type": "number",
+                            "description": "Total hours worked"
+                          },
+                          "totalJobs": {
+                            "type": "number",
+                            "description": "Total jobs completed"
+                          },
+                          "badge": {
+                            "type": "string",
+                            "description": "Profile badge"
+                          },
+                          "completedWorkHistory": {
+                            "type": "array",
+                            "description": "Completed work history"
+                          },
+                          "inProgressWorks": {
+                            "type": "array",
+                            "description": "In progress works"
+                          },
+                          "isActive": {
+                            "type": "boolean",
+                            "description": "Is the profile active"
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "Profile creation date"
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "Profile last updated date"
+                          }
+                        }
+                      }
+                    },
+                    "totalDocs": {
+                      "type": "integer",
+                      "description": "Total number of profiles found"
+                    }
+                  }
+                },
+                "message": {
+                  "type": "string",
+                  "example": "successfull"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No Profile found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/profiles": {
+      "post": {
+        "tags": ["Profiles"],
+        "description": "Filter profiles based on various criteria",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "required": false,
+            "description": "Filter parameters",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "page": {
+                  "type": "integer",
+                  "default": 1,
+                  "description": "Page number for pagination"
+                },
+                "limit": {
+                  "type": "integer",
+                  "default": 5,
+                  "description": "Number of profiles per page"
+                },
+                "skills": {
+                  "type": "string",
+                  "description": "Comma-separated list of skills to filter profiles"
+                },
+                "expertise": {
+                  "type": "string",
+                  "description": "Comma-separated list of expertise to filter profiles"
+                },
+                "sort": {
+                  "type": "string",
+                  "description": "Field to sort the profiles (e.g., jobSuccessScore, totalEarnings, totalHours, totalJobs)"
+                },
+                "profileType": {
+                  "type": "string",
+                  "enum": ["all", "profiles", "specializedProfiles"],
+                  "default": "all",
+                  "description": "Type of profiles to retrieve"
+                }
+              }
+            }
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "searchInput": {
+                  "type": "string",
+                  "description": "Input string for semantic search"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Profiles retrieved successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 200
+                },
+                "docs": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Profile"
+                  }
+                },
+                "totalDocs": {
+                  "type": "integer",
+                  "description": "Total number of profiles matching the criteria"
+                },
+                "limit": {
+                  "type": "integer",
+                  "description": "Number of profiles per page"
+                },
+                "page": {
+                  "type": "integer",
+                  "description": "Current page number"
+                },
+                "totalPages": {
+                  "type": "integer",
+                  "description": "Total number of pages"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No profiles found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/profiles/search": {
+      "post": {
+        "tags": ["Profiles"],
+        "description": "Perform a semantic search on profiles based on advanced search data",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "advancedSearchData": {
+                  "type": "object",
+                  "properties": {
+                    "profile": {
+                      "type": "object",
+                      "properties": {
+                        "jobname": {
+                          "type": "string",
+                          "description": "Job name for the search query"
+                        },
+                        "skills": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "description": "List of skills to filter profiles"
+                        }
+                      },
+                      "required": ["jobname"]
+                    }
+                  },
+                  "required": ["profile"]
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Profiles successfully retrieved based on semantic search",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 200
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "oneOf": [
+                      {
+                        "$ref": "#/definitions/Profile"
+                      },
+                      {
+                        "$ref": "#/definitions/SpecializedProfile"
+                      }
+                    ]
+                  },
+                  "description": "List of profiles matching the semantic search criteria"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request: Advanced Search Data is missing or invalid"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/specializedProfiles/{id}": {
+      "get": {
+        "tags": ["Specialized Profiles"],
+        "description": "Get specialized profiles by profile ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Profile ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/SpecializedProfile"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid Profile ID"
+          },
+          "404": {
+            "description": "No Specialized profile found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Specialized Profiles"],
+        "description": "Create a specialized profile",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Profile ID"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "url": {
+                  "type": "string",
+                  "description": "URL to scrape profile from",
+                  "example": "https://www.upwork.com/freelancers/~0122cd97069a94a6e3?s=1110580755107926016"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Profile created successfully"
+          },
+          "400": {
+            "description": "Invalid URL or Profile ID"
+          },
+          "404": {
+            "description": "Profile not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Specialized Profiles"],
+        "description": "Delete a specialized profile by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Specialized Profile ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Profile deleted successfully"
+          },
+          "400": {
+            "description": "Invalid Specialized Profile ID"
+          },
+          "404": {
+            "description": "Specialized Profile not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/specializedProfiles/": {
+      "get": {
+        "tags": ["Specialized Profiles"],
+        "description": "Get All specialized profiles",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/SpecializedProfile"
+              }
+            }
+          },
+          "404": {
+            "description": "No Specialized profile found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/specializedProfiles/deleteMany/{id}": {
+      "delete": {
+        "tags": ["Specialized Profiles"],
+        "description": "Remove all specialized profiles associated with a profile ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Profile ID to delete specialized profiles for.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully deleted all specialized profiles."
+          },
+          "404": {
+            "description": "No specialized profiles found."
+          },
+          "500": {
+            "description": "Internal Server Error."
+          }
+        }
+      }
+    },
+    "/api/v1/expertise": {
+      "get": {
+        "tags": ["Expertise"],
+        "description": "Retrieve a list of all expertise",
+        "responses": {
+          "200": {
+            "description": "Expertise successfully retrieved",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 200
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Expertise"
+                  },
+                  "description": "List of expertise"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "successfull"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No expertise found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Expertise"],
+        "description": "Add a new expertise",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "expertise": {
+                  "type": "string",
+                  "description": "The expertise to be added"
+                }
+              },
+              "required": ["expertise"]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Expertise successfully added",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 201
+                },
+                "data": {
+                  "type": "null"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Successfully saved expertise"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Bad Request: Please provide expertise"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/cookies": {
+      "get": {
+        "tags": ["Cookies"],
+        "description": "Retrieve a list of cookies for the authenticated user",
+        "responses": {
+          "200": {
+            "description": "Cookies successfully retrieved",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 200
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Cookies"
+                  },
+                  "description": "List of cookies"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "successfull"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No cookies found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Cookies"],
+        "description": "Add or update cookies for the authenticated user",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "cookies": {
+                  "type": "string",
+                  "description": "The cookies to be added or updated"
+                }
+              },
+              "required": ["cookies"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Cookies successfully updated",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 200
+                },
+                "data": {
+                  "type": "null"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Successfully updated cookies"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Cookies successfully added",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 201
+                },
+                "data": {
+                  "type": "null"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Successfully saved cookies"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Bad Request: Please provide cookies"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/cookies/validCookies": {
+      "get": {
+        "tags": ["Cookies"],
+        "description": "Check if the user's cookies are valid",
+        "responses": {
+          "200": {
+            "description": "Cookies validation result",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 200
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "isValid": {
+                      "type": "boolean",
+                      "example": true
+                    }
+                  }
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Cookies validation result"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request: User ID not found in request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/user/register": {
+      "post": {
+        "tags": ["User"],
+        "description": "Register a new user",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string",
+                  "description": "Username of the user"
+                },
+                "email": {
+                  "type": "string",
+                  "description": "Email address of the user"
+                },
+                "password": {
+                  "type": "string",
+                  "description": "Password for the user account"
+                }
+              },
+              "required": ["username", "email", "password"]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "User registered successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 200
+                },
+                "data": {
+                  "$ref": "#/definitions/User"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "User registered Successfully"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request: All fields are required"
+          },
+          "409": {
+            "description": "Conflict: User with email or username already exists"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/user/login": {
+      "post": {
+        "tags": ["User"],
+        "description": "Log in an existing user",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "emailAddress": {
+                  "type": "string",
+                  "description": "Email address of the user"
+                },
+                "password": {
+                  "type": "string",
+                  "description": "Password for the user account"
+                }
+              },
+              "required": ["emailAddress", "password"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User logged in successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 200
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "user": {
+                      "$ref": "#/definitions/User"
+                    },
+                    "accessToken": {
+                      "type": "string",
+                      "description": "Access token for the user"
+                    },
+                    "refreshToken": {
+                      "type": "string",
+                      "description": "Refresh token for the user"
+                    }
+                  }
+                },
+                "message": {
+                  "type": "string",
+                  "example": "User logged In Successfully"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request: Email and Password are required"
+          },
+          "404": {
+            "description": "Not Found: User does not exist"
+          },
+          "401": {
+            "description": "Unauthorized: Invalid user credentials"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/user": {
+      "get": {
+        "tags": ["User"],
+        "description": "Get the current logged-in user",
+        "responses": {
+          "200": {
+            "description": "User fetched successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 200
+                },
+                "data": {
+                  "$ref": "#/definitions/User"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "User fetched successfully"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized: User is not logged in"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/job": {
+      "post": {
+        "tags": ["Job"],
+        "description": "Scrape job details from the provided Upwork URL",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "url": {
+                  "type": "string",
+                  "description": "The Upwork job URL to scrape",
+                  "example": "https://www.upwork.com/job/123456789"
+                }
+              },
+              "required": ["url"]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Job details successfully scraped",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 201
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "profile": {
+                      "type": "object",
+                      "description": "Scraped job profile details"
+                    },
+                    "url": {
+                      "type": "string",
+                      "description": "The URL that was scraped",
+                      "example": "https://www.upwork.com/job/123456789"
+                    }
+                  }
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Successfully Scrape Job"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request: Url is required or invalid URL"
+          },
+          "404": {
+            "description": "No Cookies found or Invalid scraping URL"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/instructions": {
+      "get": {
+        "tags": ["Instructions"],
+        "description": "Retrieve user-specific instructions",
+        "responses": {
+          "200": {
+            "description": "Instructions retrieved successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 200
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                },
+                "message": {
+                  "type": "string",
+                  "example": "successfull"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No Instructions found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Instructions"],
+        "description": "Add or update user-specific instructions",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "instructions": {
+                  "type": "string",
+                  "description": "Instructions to be saved or updated",
+                  "example": "Step by step instructions for the task."
+                }
+              },
+              "required": ["instructions"]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Instructions saved successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 201
+                },
+                "data": null,
+                "message": {
+                  "type": "string",
+                  "example": "Successfully saved instructions"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Instructions updated successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 200
+                },
+                "data": null,
+                "message": {
+                  "type": "string",
+                  "example": "Successfully updated Instructions"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Please provide instructions"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/skills": {
+      "get": {
+        "tags": ["Skills"],
+        "description": "Retrieve all skills",
+        "responses": {
+          "200": {
+            "description": "Skills retrieved successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 200
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                },
+                "message": {
+                  "type": "string",
+                  "example": "successfull"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No skills found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Skills"],
+        "description": "Add new skills",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "skills": {
+                  "type": "string",
+                  "description": "Skills to be added",
+                  "example": "JavaScript, React, Node.js"
+                }
+              },
+              "required": ["skills"]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Skills saved successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 201
+                },
+                "data": null,
+                "message": {
+                  "type": "string",
+                  "example": "Successfully saved skills"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Please provide skills"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Profile": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the profile"
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the profile"
+        },
+        "expertise": {
+          "type": "string",
+          "description": "Expertise of the profile"
+        },
+        "jobSuccessScore": {
+          "type": "string",
+          "description": "Job success score"
+        },
+        "totalEarnings": {
+          "type": "string",
+          "description": "Total earnings"
+        },
+        "totalHours": {
+          "type": "string",
+          "description": "Total hours"
+        },
+        "totalJobs": {
+          "type": "string",
+          "description": "Total jobs"
+        },
+        "badge": {
+          "type": "string",
+          "description": "Badge"
+        },
+        "completedWorkHistory": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "description": "Title of the work"
+              },
+              "rating": {
+                "type": "number",
+                "description": "Rating of the work"
+              },
+              "ratingCount": {
+                "type": "string",
+                "description": "Rating count of the work"
+              },
+              "dateRange": {
+                "type": "string",
+                "description": "Date range of the work"
+              },
+              "feedback": {
+                "type": "string",
+                "description": "Feedback of the work"
+              },
+              "status": {
+                "type": "string",
+                "description": "Status of the work"
+              }
+            }
+          }
+        },
+        "inProgressWorks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "description": "Title of the work"
+              },
+              "dateText": {
+                "type": "string",
+                "description": "Date text of the work"
+              },
+              "status": {
+                "type": "string",
+                "description": "Status of the work"
+              }
+            }
+          }
+        }
+      }
+    },
+    "SpecializedProfile": {
+      "type": "object",
+      "properties": {
+        "profile_id": {
+          "type": "string",
+          "description": "ID of the profile"
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the profile"
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the profile"
+        },
+        "expertise": {
+          "type": "string",
+          "description": "Expertise of the profile"
+        },
+        "jobSuccessScore": {
+          "type": "string",
+          "description": "Job success score"
+        },
+        "totalEarnings": {
+          "type": "string",
+          "description": "Total earnings"
+        },
+        "totalHours": {
+          "type": "string",
+          "description": "Total hours"
+        },
+        "totalJobs": {
+          "type": "string",
+          "description": "Total jobs"
+        },
+        "badge": {
+          "type": "string",
+          "description": "Badge"
+        },
+        "completedWorkHistory": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "description": "Title of the work"
+              },
+              "rating": {
+                "type": "number",
+                "description": "Rating of the work"
+              },
+              "ratingCount": {
+                "type": "string",
+                "description": "Rating count of the work"
+              },
+              "dateRange": {
+                "type": "string",
+                "description": "Date range of the work"
+              },
+              "feedback": {
+                "type": "string",
+                "description": "Feedback of the work"
+              },
+              "status": {
+                "type": "string",
+                "description": "Status of the work"
+              }
+            }
+          }
+        },
+        "inProgressWorks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "description": "Title of the work"
+              },
+              "dateText": {
+                "type": "string",
+                "description": "Date text of the work"
+              },
+              "status": {
+                "type": "string",
+                "description": "Status of the work"
+              }
+            }
+          }
+        }
+      }
+    },
+    "User": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string",
+          "description": "Unique identifier for the user"
+        },
+        "username": {
+          "type": "string",
+          "description": "Username of the user"
+        },
+        "email": {
+          "type": "string",
+          "description": "Email address of the user"
+        }
+      }
+    },
+    "Cookies": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string",
+          "description": "Unique identifier for the cookie entry"
+        },
+        "user_id": {
+          "type": "string",
+          "description": "Unique identifier of the user associated with the cookies"
+        },
+        "cookies": {
+          "type": "string",
+          "description": "String representation of the cookies"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when the cookie entry was created"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when the cookie entry was last updated"
+        }
+      }
+    }
+  }
+}
