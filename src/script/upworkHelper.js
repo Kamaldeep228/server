@@ -3357,7 +3357,7 @@ if (!shouldContinue) {
               console.log("Api body", advancedSearchData);
 
               if (skills && jobName) {
-                fetch("http://18.116.11.59:8000/api/v1/profiles/search", {
+                fetch("https://vibhutidigital.com/api/v1/profiles/search", {
                   method: "POST",
                   headers: {
                     "Content-Type": "application/json",
@@ -3591,7 +3591,7 @@ if (!shouldContinue) {
   function getSpecializedProfile() {
      return new Promise((resolve, reject) => {
       try{
-  fetch("http://18.116.11.59:8000/api/v1/profileSpecialization").then(async(res)=>await res.json()).then((res)=>resolve(res.data[0]));
+  fetch("https://vibhutidigital.com/api/v1/profileSpecialization").then(async(res)=>await res.json()).then((res)=>resolve(res.data[0]));
       }catch(e){
       console.log(e)
           reject(false)
